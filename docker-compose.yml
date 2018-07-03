@@ -1,0 +1,26 @@
+version: '3'
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "80:80"
+      - "4000:4000"
+    links: 
+      - mariadb:mariadb
+    command: /bin/bash -lc "mix phx.server"
+    environment:
+      - PORT:80
+  mariadb:
+    image: mariadb:10
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: p@ssw0rd
+      MYSQL_USER: mariadb
+      MYSQL_PASSWORD: p@ssw0rd
+      MYSQL_DATABASE: phoenixdb
+    ports:
+      - "3306:3306"
+ 
